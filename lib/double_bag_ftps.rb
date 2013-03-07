@@ -93,6 +93,8 @@ class DoubleBagFTPS < Net::FTP
     if @passive
       host, port = makepasv
 
+      host = @hostname if Addrinfo.ip(host).ipv4_private?
+
       if @resume and rest_offset
         resp = sendcmd('REST ' + rest_offset.to_s)
         if resp[0] != ?3
